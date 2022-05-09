@@ -19,15 +19,20 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.done) {
             return AnimatedSplashScreen(
-              splash: 'images/hmlogo2.jpg',
+              splash: 'images/mclogo1.png',
               nextScreen: SignIn(),
               splashTransition: SplashTransition.rotationTransition,
               // pageTransitionType: PageTransitionT.scale,
             );
           }
+
           return Container();
         },
       ),
+      // initialRoute: '/',
+      // routes: {
+      //   '/homepage': (context) => MyHomePage(),
+      // },
     );
   }
 }

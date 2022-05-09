@@ -1,22 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_handymappisioma/services.dart';
+import 'package:flutter_handymappisioma/hospitalservices.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-import 'serviceprofile.dart';
+import 'hospitalprofile.dart';
 
-class ServiceDetail extends StatefulWidget {
-  final ServiceDataModel serviceDataModel;
+class Hmap extends StatefulWidget {
+  // final ServiceDataModel serviceDataModel;
+  final HospitalModel hm;
 
-  ServiceDetail({Key? key, required this.serviceDataModel}) : super(key: key);
+  Hmap({Key? key, required this.hm}) : super(key: key);
 
   @override
-  State<ServiceDetail> createState() => _ServiceDetailState();
+  State<Hmap> createState() => _HmapState();
 }
 
-class _ServiceDetailState extends State<ServiceDetail> {
+class _HmapState extends State<Hmap> {
   late GoogleMapController controller;
 
   Set<Marker> _markers = Set<Marker>();
@@ -41,14 +42,14 @@ class _ServiceDetailState extends State<ServiceDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.serviceDataModel.name),
+        title: Text("Hospital Location"),
       ),
       body: Column(
         children: [
-          Text(
-            'Select Worker Location',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
+          // Text(
+          //   'Select Worker Location',
+          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          // ),
           Expanded(
             child: GoogleMap(
                 myLocationButtonEnabled: true,
@@ -72,22 +73,24 @@ class _ServiceDetailState extends State<ServiceDetail> {
   }
 
   void showPinsOnMap() {
-    for (int index = 0;
-        index < widget.serviceDataModel.workers.length;
-        index++) {
-      _markers.add(Marker(
-          markerId: MarkerId(widget.serviceDataModel.workers[index].id),
-          position: widget.serviceDataModel.workers[index].location,
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ServiceProfile(
-                          worker: widget.serviceDataModel.workers[index],
-                        )));
-          }));
-    }
+    // for (int index = 0;
+    // index < widget.serviceDataModel.workers.length;
+    // index++)// {
+    _markers.add(Marker(
+        markerId: MarkerId(widget.hm.id),
+        position: widget.hm.location,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HospitalProfile(
+                        hm: widget.hm,
+                      )));
+        }));
+    //  }
   }
+
+  // worker: widget.serviceDataModel.workers[index],
 
   Future<void> getLocation() async {
     Location location = new Location();
